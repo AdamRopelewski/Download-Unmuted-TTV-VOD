@@ -3,13 +3,32 @@
 This PowerShell script allows you to download and concatenate video chunks from a specified URL, creating a single unmuted video file. The script utilizes `wget` to fetch the video segments and `ffmpeg` to merge them into one file.
 
 ## Disclaimer
-This script works only within 24 hours of the VOD's publication.
+This script works only within 24 hours of the VOD's publication!
 
 ## Prerequisites
 
 - PowerShell
 - `wget` command-line tool
 - `ffmpeg` command-line tool
+
+## Prerequisite Installation Guide
+
+1. **Install Chocolatey**  
+   Download and install Chocolatey by following the instructions [here](https://chocolatey.org/install).
+
+2. **Install FFmpeg**  
+   Once Chocolatey is installed, open **Command Prompt** (CMD) or **PowerShell** as Administrator and run the following command to install FFmpeg:
+   ```cmd
+   choco install ffmpeg
+   ```
+
+3. **Install Wget**  
+   To install Wget, use the following command in the same elevated terminal:
+   ```cmd
+   choco install wget
+   ```
+
+
 
 ## Usage
 
