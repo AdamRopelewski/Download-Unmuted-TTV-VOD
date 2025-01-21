@@ -108,9 +108,9 @@ Get-Content "links.txt" | ForEach-Object {
         Write-Host "Download speed: $responseSpeed"
     }
 
-    # If there are more than 10 consecutive 403 errors, exit the loop
-    if ($consecutive403 -ge 10) {
-        Write-Host "10 consecutive 403 errors - stopping download."
+    # If there are more than 20 consecutive 403 errors, exit the loop
+    if ($consecutive403 -ge 20) {
+        Write-Host "20 consecutive 403 errors - stopping download."
         $shouldExitLoop = $true
     }
 }
@@ -119,7 +119,7 @@ Get-Content "links.txt" | ForEach-Object {
 Write-Host "`n`nStarting ffmpeg.`n`n"
 
 # Get the list of .ts files and sort them
-$files = Get-ChildItem *.ts | Sort-Object -Property Name
+$files = Get-ChildItem *.ts | Sort-Object { [int]($_.BaseName) } 
 $concat = $files | ForEach-Object { "file '$($_.Name)'" }
 
 # Save the list of files to concat.txt
