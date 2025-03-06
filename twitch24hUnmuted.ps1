@@ -114,17 +114,34 @@ Get-Content "links.txt" | ForEach-Object {
 # Run ffmpeg to combine the .ts files into one video
 Write-Host "`n`nStarting ffmpeg.`n`n"
 
-# Get the list of .ts files and sort them
 $files = Get-ChildItem *.ts | Sort-Object { [int]($_.BaseName) }
+
+# Create the concat file entries
 $concat = $files | ForEach-Object { "file '$($_.Name)'" }
 
-# Save the list of files to concat.txt
-$concat | Out-File -FilePath "concat.txt"
+# Create the UTF-8 encoding without BOM
+$utf8NoBOM = New-Object System.Text.UTF8Encoding $false
 
-# Combine the files using ffmpeg
-ffmpeg -f concat -safe 0 -i "concat.txt" -y -c copy "$starting_path\VODunmuted-$currentDate.mp4"
+# Write to file without BOM
+[System.IO.File]::WriteAllLines(
+    (Join-Path -Path $folderPath -ChildPath "concat.txt"),
+    $concat,
+    $utf8NoBOM
+)
 
-# Remove temporary files
+
+
+
+
+
+Read-Host
+
+# Combine the files using ffmpeg and save the result as VODunmuted.mp4
+ffmpeg -f concat -safe 0 -i "concat.txt" -y -c copy "$starting_path\VODunmuted-$currentdate.mp4"
+
+Read-Host
+
+# Remove the .ts and .txt files
 Remove-Item *.ts
 Remove-Item *.txt
 
