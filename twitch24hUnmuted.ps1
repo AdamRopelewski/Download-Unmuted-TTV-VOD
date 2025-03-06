@@ -130,16 +130,8 @@ $utf8NoBOM = New-Object System.Text.UTF8Encoding $false
 )
 
 
-
-
-
-
-Read-Host
-
 # Combine the files using ffmpeg and save the result as VODunmuted.mp4
 ffmpeg -f concat -safe 0 -i "concat.txt" -y -c copy "$starting_path\VODunmuted-$currentdate.mp4"
-
-Read-Host
 
 # Remove the .ts and .txt files
 Remove-Item *.ts
